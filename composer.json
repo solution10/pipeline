@@ -1,0 +1,30 @@
+{
+    "name": "solution10/pipeline",
+    "description": "Pipeline library with named steps and ordering.",
+    "keywords": ["pipeline", "workflow"],
+    "minimum-stability": "stable",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Alex Gisby",
+            "email": "alex@solution10.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.6"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^5.0",
+        "squizlabs/php_codesniffer": "^2.7"
+    },
+    "autoload": {
+        "psr-4": {
+            "Solution10\\Pipeline\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Solution10\\Pipeline\\Tests\\": "tests/"
+        }
+    }
+}
