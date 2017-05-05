@@ -214,6 +214,41 @@ class PipelineTest extends TestCase
             });
     }
 
+    /* -------------- Dropping Tests ---------------------- */
+
+    public function testDrop()
+    {
+        $w = (new Pipeline())
+            ->step('double', function ($input) {
+                return $input * 2;
+            })
+            ->step('add-one', function ($input) {
+                return $input + 1;
+            })
+            ->step('stringify', function ($input) {
+                return 'Result: '.$input;
+            })
+        ;
+
+        $this->assertEquals($w, $w->drop('add-one'));
+        $this->assertEquals('Result: 4', $w->run(2));
+    }
+
+    public function testDropUnknownStep()
+    {
+        $w = (new Pipeline())
+            ->step('double', function ($input) {
+                return $input * 2;
+            })
+            ->step('stringify', function ($input) {
+                return 'Result: '.$input;
+            })
+        ;
+
+        $this->assertEquals($w, $w->drop('add-one'));
+        $this->assertEquals('Result: 4', $w->run(2));
+    }
+
     /* -------------- Pipeline of Pipelines ------------------ */
 
     public function testPipelineOfPipeline()

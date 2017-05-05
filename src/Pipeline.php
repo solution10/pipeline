@@ -116,6 +116,22 @@ class Pipeline
     }
 
     /**
+     * Removes a step from a pipeline entirely. Will fail silently if the
+     * step is not present in the pipeline.
+     *
+     * @param   string  $name
+     * @return  $this
+     */
+    public function drop($name)
+    {
+        $pivot = array_search($name, $this->steps);
+        if ($pivot !== false) {
+            array_splice($this->steps, $pivot, 1);
+        }
+        return $this;
+    }
+
+    /**
      * Allows the Pipeline to be passed as a callable.
      *
      * @param   mixed   $input

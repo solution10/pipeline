@@ -3,6 +3,7 @@
 - [Basics](#basics)
 - [first() and last()](#first-and-last)
 - [before() and after()](#before-and-after)
+- [drop()](#drop)
 - [Multiple Parameters](#multiple-parameters)
 - [Pipelines of Pipelines](#pipelines-of-pipelines)
 - [Run Types](#run-types)
@@ -130,6 +131,34 @@ $result = $w->run(2);
 > **Note**: `before()` and `after()` DO NOT guarantee that that step will be run *immediately* before or after the
 > target step; subsequent calls to `before()` and `after()` can change the order of steps, they simply guarantee the
 > relative positions are correct.
+
+## `drop()`
+
+You can remove steps from a Pipeline entirely by calling `drop()` with the name of the step:
+
+```php
+<?php
+
+use Solution10\Pipeline\Pipeline;
+
+$w = (new Pipeline())
+    ->step('double', function ($input) {
+        return $input * 2;
+    })
+    ->step('add-one', function ($input) {
+        return $input + 1;
+    })
+    ->step('stringify', function ($input) {
+        return 'Result: '.$input;
+    })
+;
+
+// Removes the add-one step from all subsequent Pipeline runs:
+$w->drop('add-one');
+
+$result = $w->run(2);
+// $result is "Result: 4", the 'add-one' step was removed.
+```
 
 ## Multiple Parameters
 
