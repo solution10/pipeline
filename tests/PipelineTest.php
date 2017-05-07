@@ -249,6 +249,31 @@ class PipelineTest extends TestCase
         $this->assertEquals('Result: 4', $w->run(2));
     }
 
+    /* -------------- Get Tests -------------------- */
+
+    public function testGetKnownStep()
+    {
+        $addOne = function ($input) {
+            return $input + 1;
+        };
+
+        $w = (new Pipeline())->step('add-one', $addOne);
+        $this->assertEquals($addOne, $w->get('add-one'));
+    }
+
+    public function testGetUnknownStep()
+    {
+        $w = (new Pipeline())
+            ->step('double', function ($input) {
+                return $input * 2;
+            })
+            ->step('stringify', function ($input) {
+                return 'Result: '.$input;
+            })
+        ;
+        $this->assertNull($w->get('add-one'));
+    }
+
     /* -------------- Pipeline of Pipelines ------------------ */
 
     public function testPipelineOfPipeline()

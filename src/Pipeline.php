@@ -132,6 +132,20 @@ class Pipeline
     }
 
     /**
+     * Returns the step defined at the name. Will return null if that step doesn't exist.
+     *
+     * @param   string  $name
+     * @return  callable|Pipeline|null
+     */
+    public function get($name)
+    {
+        if (array_key_exists($name, $this->callbacks)) {
+            return $this->callbacks[$name];
+        }
+        return null;
+    }
+
+    /**
      * Allows the Pipeline to be passed as a callable.
      *
      * @param   mixed   $input

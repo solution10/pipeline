@@ -4,6 +4,7 @@
 - [first() and last()](#first-and-last)
 - [before() and after()](#before-and-after)
 - [drop()](#drop)
+- [get()](#get)
 - [Multiple Parameters](#multiple-parameters)
 - [Pipelines of Pipelines](#pipelines-of-pipelines)
 - [Run Types](#run-types)
@@ -158,6 +159,33 @@ $w->drop('add-one');
 
 $result = $w->run(2);
 // $result is "Result: 4", the 'add-one' step was removed.
+```
+
+## `get()`
+
+You can retrieve a step from the pipeline (return the callback/sub-pipeline without running it) using the
+`get()` method:
+
+```php
+<?php
+
+use Solution10\Pipeline\Pipeline;
+
+$addOne = function ($input) {
+    return $input + 1;    
+};
+
+$w = (new Pipeline())
+    ->step('double', function ($input) {
+        return $input * 2;
+    })
+    ->step('add-one', $addOne)
+    ->step('stringify', function ($input) {
+        return 'Result: '.$input;
+    })
+;
+
+$w->get('add-one') === $addOne;
 ```
 
 ## Multiple Parameters
